@@ -1,13 +1,190 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.moving-headline-text {
+    flex-shrink: 0;
+    animation: slide-left 40s linear infinite;
+  }
+
+    @keyframes slide-left {
+    from {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+    }
+    to {
+      -webkit-transform: translateX(-100%);
+              transform: translateX(-100%);
+    }
+  }
+
+
+.typewriter {
+  min-width: 200px;
+  display: flex;
+  align-items: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.typewriter p {
+  width: 0;
+  max-width: max-content;
+  overflow: hidden; 
+  border-right: .05em solid #464545;
+  white-space: nowrap; 
+  margin: 0;
 }
+
+.text {
+  height: 2.5rem;
+  overflow: hidden;
+}
+
+.wrapper {
+  animation: slide-text 20s steps(1, end)  infinite;
+}
+
+.wrapper p {
+  margin: 1rem 0;
+  animation: 
+    typing-erase 5s steps(80, end) infinite,
+    blink-caret .5s step-end infinite;
+}
+
+/* The type and erase effect */
+@keyframes typing-erase {
+  0% { width: 0 }
+  50%, 70% { width: 100% }
+  90%, 100% { width: 0 }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: gray }
+}
+
+@keyframes slide-text {
+    0%, 25% { transform: translateY(-0.6rem) }
+    25% ,50% { transform: translateY(-3.4rem) }
+    50%, 75% { transform: translateY(-6.2rem) }
+    75%, 100% { transform: translateY(6rem) }
+}
+
+@media only screen and (max-width: 600px) {
+    .typewriter {
+        min-width: 150px;
+        display: flex;
+        align-items: center;
+      }
+    @keyframes slide-text {
+        0%, 25% { transform: translateY(-0.45rem) }
+        25% ,50% { transform: translateY(-2.7rem) }
+        50%, 75% { transform: translateY(-4.9rem) }
+        75%, 100% { transform: translateY(6rem) }
+    } }
+
+
+
+    /*Menu Start*/
+    .mainbtn {
+      position:absolute;
+      bottom:115px;
+      left:15px;
+      z-index:2;
+    }
+    
+    .circle-container {
+      position: absolute;
+     top:-1.8rem;
+     left:4rem;
+      width: 150px;
+      height: 150px;	
+       z-index:0;
+       transform: rotateZ(-95deg)
+    }
+    .circle-container .icon {
+      display: block;
+      overflow: hidden;
+      position: absolute;
+      width: 28px; 
+      height: 28px; 
+      margin:45px;
+      cursor: pointer;
+    }
+    .circle-container i { display: block; width: 100px; }
+    .deg0 { transform: rotate(-25deg) translate(5.75em) rotate(-0deg);   -webkit-transition: all 0.5s ease-out;
+      -moz-transition: all 0.5s ease-out;
+      transition: all 0.5s ease-out;}
+    .deg30 { transform: rotate(-25deg) translate(5.75em) rotate(-30deg);  -webkit-transition: all 0.5s ease-out;
+      -moz-transition: all 0.5s ease-out;
+      transition: all 0.5s ease-out; }
+    .deg60 { transform: rotate(-25deg) translate(5.75em) rotate(-60deg);  -webkit-transition: all 0.5s ease-out;
+      -moz-transition: all 0.5s ease-out;
+      transition: all 0.5s ease-out; }
+    .deg90 { transform: rotate(-25deg) translate(6em) rotate(-90deg);  -webkit-transition: all 0.5s ease-out;
+      -moz-transition: all 0.5s ease-out;
+      transition: all 0.5s ease-out; 
+    }
+    
+    .fa-home:hover {color:tan;}
+    .fa-cog:hover {color:gray;}
+    .fa-comments:hover {color:teal;}
+    .fa-heart:hover {color:red;}
+    
+    .open.deg0 { transform: rotate(0deg) translate(5.75em) rotate(105deg); }
+    .open.deg30 { transform: rotate(30deg) translate(5.75em) rotate(-0deg); }
+    .open.deg60 { transform: rotate(60deg) translate(5.75em) rotate(30deg); }
+    .open.deg90 { transform: rotate(90deg) translate(6em) rotate(30deg); 
+    }
+    
+    
+    #author {
+      font-family:'Squada One';
+      top: calc(50% + 50px);
+      left: calc(50% - 225px);
+      color:black;
+      font-size:40px;
+      text-decoration:none;
+      display: block;
+      position: absolute;
+      text-align:center;
+    }
+    
+    /*Menu End*/
+
+    .signout-container {
+      @apply flex w-[25%] md:w-[40%] sm:w-[95%] mx-auto min-h-full flex-col justify-center px-6 py-1 lg:px-8;
+    }
+    .signout-text {
+      @apply mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-teal-800;
+    }
+    .signout-btn {
+      @apply flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600;
+    }
+
+    .socialApp-anime-apply {
+      animation: socialApp-anime-apply .4s ease-in-out;
+    }
+
+    @keyframes socialApp-anime-apply {
+      0% {
+        bottom: -30%;
+      }
+      100% {
+        bottom: 0;
+      }
+    }
+
+    .socialApp-anime-none {
+      animation: socialApp-anime-none .4s ease-in-out;
+    }
+
+    @keyframes socialApp-anime-none {
+      0% {
+        bottom: 0;
+      }
+      100% {
+        bottom: -30%;
+      }
+    }
+    
