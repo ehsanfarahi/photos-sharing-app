@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 // React Icons
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { LuShare2 } from "react-icons/lu";
 import { FcPicture } from "react-icons/fc";
 import { FcStackOfPhotos } from "react-icons/fc";
 import { MdDownload } from "react-icons/md";
+
+// Components
+import LoadingPage from "../components/LoadingPage";
 
 const AdminAllPhotos = () => {
     const [photos, setPhotos] = useState([]);
@@ -20,13 +22,9 @@ const AdminAllPhotos = () => {
     const user = JSON.parse(localStorage.getItem("psUser"));
 
     useEffect(() => {
-        const controller = new AbortController();
-        const signal = controller.signal;
-
       
         getPhotos(); 
 
-        return controller.abort();
     }, [])
 
     async function getPhotos() {
@@ -88,6 +86,8 @@ const AdminAllPhotos = () => {
     }
 
     return <div className="px-4 mb-24 mt-4 w-[70%] md:w-[90%] sm:w-[100%] mx-auto">
+        {error && <p>Error: {error}</p>}
+        {loading && <LoadingPage/>}
         <div>
         <div className="mb-6 font-semibold">
 <p className="text-lg sm:text-[1rem] font-bold text-green-800">Admin panel</p>
@@ -95,11 +95,11 @@ const AdminAllPhotos = () => {
             <p className="font-semibold text-lg sm:text-[1rem] mb-2">My uploaded photos {photos.filter(fp => fp.userId === user?._id).length > 0 && <small>({photos.filter(fp => fp.userId === user?._id).length})</small>}</p>
             <div className="h-[.4rem] w-[6rem] bg-blue-400 rounded-lg opacity-80 sm:h-[.3rem] mb-8 sm:w-[5rem]"></div>
             <div className="grid grid-cols-6 md:grid-cols-4 sm:grid-cols-2 gap-3">
-               {photos.filter(fp => fp.userId === user?._id).length > 0 || photos.length > 0? <>{photos?.filter(p => p.userId === user?._id)?.map(photo => photo.photo.map(pho => {
+               {photos.filter(fp => fp.userId === user?._id).length > 0 || photos.length > 0? <>{photos?.filter(p => p.userId === user?._id)?.map(photo => photo.photo.map((pho, i) => {
                 return (
-                    <div key={pho._id} className="relative">
+                    <div key={i} className="relative">
                     <div className="absolute flex items-center text-4xl top-2 right-2">
-                    {/* <LuShare2 className="hover:bg-gray-300 bg-white p-2 mr-[.2rem] cursor-pointer rounded-full" /> */}
+                   
                     <RiDeleteBin6Line onClick={()=>handleDeleteIcon(pho._id)} className="hover:bg-gray-300 cursor-pointer bg-white p-2 rounded-full" />
                     </div>
                     <img onClick={()=>viewFull(pho._id)} className="shadow w-full aspect-[5/4] cursor-pointer border border-green-100 rounded"  src={require("../uploads/" + pho)} alt="Wedding" />
@@ -111,9 +111,9 @@ const AdminAllPhotos = () => {
             <p className="font-semibold text-lg sm:text-[1rem] mb-2 mt-10">All photos {photos.length > 0 && <small>({photos.length})</small>}</p>
             <div className="h-[.35rem] w-[3.5rem] bg-blue-400 rounded-lg opacity-80 sm:h-[.3rem] mb-8 sm:w-[5rem]"></div>
             <div className="grid grid-cols-6 md:grid-cols-4 sm:grid-cols-2 gap-3">
-               {photos.length > 0 ? <>{photos?.map(photo => photo.photo.map(pho => {
+               {photos.length > 0 ? <>{photos?.map(photo => photo.photo.map((pho, i) => {
                 return (
-                    <div key={pho._id} className="relative">
+                    <div key={i} className="relative">
                     <div className="absolute flex items-center text-4xl top-2 right-2">
                    <MdDownload onClick={()=>handlePhotoDownload(require("../uploads/" + pho))} className="hover:bg-gray-300 bg-white p-2 mr-[.2rem] cursor-pointer rounded-full" />
                     <RiDeleteBin6Line onClick={()=>handleDeleteIcon(pho._id)} className="hover:bg-gray-300 cursor-pointer bg-white p-2 rounded-full" />

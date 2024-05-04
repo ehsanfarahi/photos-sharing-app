@@ -107,7 +107,7 @@ const Header = ({headerUpdated}) => {
         <div className="w-[70%] md:w-[95%] sm:w-[100%] mx-auto">
             <div className="py-6 mx-4">
                 <div className="flex items-center relative">
-                    <label htmlFor={getAdmin > 0 && "photo"}>{loadingPhoto ? <LoadingPage/> : <img onClick={()=>setUploadbtn(getAdmin > 0 && true)} className="rounded-full border-4 w-[7rem] h-[7rem] cursor-pointer border-green-200" src={mainPhoto ? require("../uploads/" + mainPhoto?.photo) : require("../images/bride-groom-cartoon.jpg")} alt="bride and groom"/>}</label>
+                    <label htmlFor={getAdmin > 0 ? "photo" : ""}>{loadingPhoto ? <LoadingPage/> : <img onClick={()=>setUploadbtn(getAdmin > 0 && true)} className="rounded-full border-4 w-[7rem] h-[7rem] cursor-pointer border-green-200" src={mainPhoto ? require("../uploads/" + mainPhoto?.photo) : require("../images/bride-groom-cartoon.jpg")} alt="bride and groom"/>}</label>
                    <form onSubmit={handleSubmit}  encType="multipart/form-data" >
                    <input className="hidden" accept="image/*" type="file" id="photo" name="photo" onChange={(e)=>setPhoto(e.target.files[0])}  /> 
                    {uploadBtn && <button type="submit" className="rounded-full border-4 w-[7rem] h-[7rem] border-green-300 absolute left-0 top-0 bg-green-200 hover:bg-green-300"><span className="flex flex-col items-center font-semibold text-teal-700"><span>Upload</span> <span>photo</span></span></button>}

@@ -6,6 +6,9 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FcPicture } from "react-icons/fc";
 import { FcStackOfPhotos } from "react-icons/fc";
 
+// Components
+import LoadingPage from "./LoadingPage";
+
 const UploadedPhotos = () => {
     const [photos, setPhotos] = useState([]);
     const [photoId, setPhotoId] = useState("");
@@ -65,11 +68,13 @@ const UploadedPhotos = () => {
             method: "delete"
         });
 
-        setDeleteMessage(false);
+        setDeleteMessage(false);  
         getPhotos();
     }
 
     return <div className="px-4 mb-10 mt-4 w-[70%] md:w-[90%] sm:w-[100%] mx-auto">
+        {error && <p>Error: {error}</p>}
+        {loading && <LoadingPage/>}
         <div>
         <div className="mb-6 font-semibold">
 <p className="text-lg sm:text-[1rem] font-bold text-green-800">Welcome {user && user.name} to our wedding ceremony!</p>
@@ -77,11 +82,11 @@ const UploadedPhotos = () => {
             <p className="font-semibold text-lg sm:text-[1rem] mb-2">My uploaded photos {photos.filter(fp => fp.userId === user?._id).length > 0 && <small>({photos.filter(fp => fp.userId === user?._id).length})</small>}</p>
             <div className="h-[.4rem] w-[6rem] bg-blue-400 rounded-lg opacity-80 sm:h-[.3rem] mb-8 sm:w-[5rem]"></div>
             <div className="grid grid-cols-6 md:grid-cols-4 sm:grid-cols-2 gap-3">
-               {photos.filter(fp => fp.userId === user?._id).length > 0 ? <>{photos?.filter(p => p.userId === user?._id)?.map(photo => photo.photo.map(pho => {
+               {photos.filter(fp => fp.userId === user?._id).length > 0 ? <>{photos?.filter(p => p.userId === user?._id)?.map(photo => photo.photo.map((pho, i) => {
                 return (
-                    <div key={pho._id} className="relative">
+                    <div key={i} className="relative">
                     <div className="absolute flex items-center text-4xl top-2 right-2">
-                    <RiDeleteBin6Line onClick={()=>alert(pho)} className="hover:bg-gray-300 cursor-pointer bg-white p-2 rounded-full" />
+                    <RiDeleteBin6Line onClick={()=>handleDeleteIcon(photo._id)} className="hover:bg-gray-300 cursor-pointer bg-white p-2 rounded-full" />
                     </div>
                     {
                         <img onClick={()=>viewFull(photo._id)} className="shadow w-full aspect-[5/4] cursor-pointer border border-green-100 rounded"  src={require("../uploads/" + pho)} alt="Wedding" />
